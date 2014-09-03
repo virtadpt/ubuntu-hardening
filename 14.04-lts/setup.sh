@@ -20,6 +20,11 @@ apt-get upgrade -y
 # Logwatch parses the logfiles and mails you about anomalies.
 apt-get install -y postfix aide logwatch
 
+# These are always good to have around.
+apt-get install -y haveged openntpd lynx sslscan psmisc
+apt-get install -y openssl-blacklist openssl-blacklist-extra
+apt-get install -y openssh-blacklist openssh-blacklist-extra
+
 # Install all the files.  All of them.
 cp -rv * /etc
 
