@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# by: drwho at virtadpt dot net
+
+# Copies all this stuff into place on a brand-new system to harden it.  Also
+# installs some useful packages for monitoring.
+
+# You must be this high <hand> to ride this ride.
+if [ `id -u` -gt 0 ]; then
+    echo "You must be root to update the $NAME codebase. ABENDing."
+    exit 1
+fi
+
+# Install all extant patches.
+apt-get update
+apt-get upgrade -y
+
+# Postfix sends mail.
+# AIDE monitors the file system.
+# Logwatch parses the logfiles and mails you about anomalies.
+apt-get install -y postfix aide logwatch
+
+# Install all the files.  All of them.
+cp -rv * /etc
+
+# Just not this one.
+rm -f /etc/setup.sh
+
+# Build the initial AIDE database.
+echo "Building initial AIDE database.  Please be patient, this takes a while."
+aide.wrapper --init
+cp /var/lib/aide/aide.db.new /var/lib/aide.aide.db
+
+# Fin.
+exit 0
