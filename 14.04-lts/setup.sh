@@ -17,7 +17,7 @@ fi
 apt-get install -y postfix aide logwatch
 
 # These are always good to have around.
-apt-get install -y haveged openntpd lynx sslscan psmisc
+apt-get install -y haveged openntpd lynx sslscan psmisc sysstat
 apt-get install -y openssl-blacklist openssl-blacklist-extra
 apt-get install -y openssh-blacklist openssh-blacklist-extra
 
