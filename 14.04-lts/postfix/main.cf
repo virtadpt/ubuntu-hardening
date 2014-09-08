@@ -4,7 +4,7 @@
 # Debian specific:  Specifying a file name will cause the first
 # line of that file to be used as the name.  The Debian default
 # is /etc/mailname.
-myorigin = $mydomain
+myorigin = $myhostname
 
 smtpd_banner = $myhostname ESMTP $mail_name (Ubuntu)
 biff = no
