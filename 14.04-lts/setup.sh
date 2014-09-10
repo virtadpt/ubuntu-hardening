@@ -30,7 +30,7 @@ rm -f /etc/setup.sh
 # Build the initial AIDE database.
 echo "Building initial AIDE database.  Please be patient, this takes a while."
 aide.wrapper --init
-cp /var/lib/aide/aide.db.new /var/lib/aide.aide.db
+cp /var/lib/aide/aide.db.new /var/lib/aide/aide.db
 
 # Fin.
 exit 0
