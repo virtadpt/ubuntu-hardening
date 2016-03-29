@@ -11,6 +11,9 @@ if [ `id -u` -gt 0 ]; then
     exit 1
 fi
 
+# Patch the system.
+apt-get upgrade -y
+
 # Postfix sends mail.
 # AIDE monitors the file system.
 # Logwatch parses the logfiles and mails you about anomalies.
