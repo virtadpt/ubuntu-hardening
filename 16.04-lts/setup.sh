@@ -30,13 +30,16 @@ cp -rv * /etc
 # Just not this one.
 rm -f /etc/setup.sh
 
-# Enable some system services.
+# Enable some system services.  `systemctl list-unit-files` is your friend.
 systemctl enable acpid
 systemctl enable sysstat
 
 # Disable other system services.
 systemctl disable iscsi
 systemctl disable iscsid
+systemctl disable mountnfs-bootclean
+systemctl disable mountnfs
+systemctl disable umountnfs
 
 # Build the initial AIDE database.
 echo "Building initial AIDE database.  Please be patient, this takes a while."
