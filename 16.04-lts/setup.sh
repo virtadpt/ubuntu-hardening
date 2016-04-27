@@ -30,6 +30,14 @@ cp -rv * /etc
 # Just not this one.
 rm -f /etc/setup.sh
 
+# Enable some system services.
+systemctl enable acpid
+systemctl enable sysstat
+
+# Disable other system services.
+systemctl disable iscsi
+systemctl disable iscsid
+
 # Build the initial AIDE database.
 echo "Building initial AIDE database.  Please be patient, this takes a while."
 aide.wrapper --init
@@ -37,3 +45,4 @@ cp /var/lib/aide/aide.db.new /var/lib/aide/aide.db
 
 # Fin.
 exit 0
+
