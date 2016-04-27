@@ -20,6 +20,7 @@ apt-get upgrade -y
 apt-get install -y postfix aide logwatch
 
 # These are always good to have around.
+apt-get install -y libpam-pwquality
 apt-get install -y haveged openntpd lynx sslscan psmisc sysstat
 apt-get install -y openssl-blacklist openssl-blacklist-extra
 apt-get install -y openssh-blacklist openssh-blacklist-extra
@@ -29,6 +30,23 @@ cp -rv * /etc
 
 # Just not this one.
 rm -f /etc/setup.sh
+
+# Create /var/log/sulog
+touch /var/log/sulog
+chown root:root /var/log/sulog
+chmod 0640 /var/log/sulog
+
+# Set some file ownerships.
+chown root:root /etc/at.allow
+chown root:root /etc/cron.allow
+chown -R root:root /var/spool/cron
+
+# Set some file permissions.
+chmod 0400 /etc/at.allow
+chmod 0400 /etc/cron.allow
+chmod 0400 /etc/crontab
+chmod 0700 /etc/skel/.ssh
+chmod 0600 /etc/skel/.ssh/authorized_keys
 
 # Enable some system services.  `systemctl list-unit-files` is your friend.
 systemctl enable acpid
