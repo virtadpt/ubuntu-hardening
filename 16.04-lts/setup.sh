@@ -31,15 +31,20 @@ cp -rv * /etc
 # Just not this one.
 rm -f /etc/setup.sh
 
-# Create /var/log/sulog
+# Create /var/log/sulog.
 touch /var/log/sulog
 chown root:root /var/log/sulog
 chmod 0640 /var/log/sulog
 
+# Create the sudo log directory tree.
+mkdir /var/log/sudo-io
+
 # Set some file ownerships.
 chown root:root /etc/at.allow
 chown root:root /etc/cron.allow
+chown root:root /etc/sudoers
 chown -R root:root /var/spool/cron
+chown root:syslog /var/log/sudo-io
 
 # Set some file permissions.
 chmod 0400 /etc/at.allow
@@ -47,6 +52,8 @@ chmod 0400 /etc/cron.allow
 chmod 0400 /etc/crontab
 chmod 0700 /etc/skel/.ssh
 chmod 0600 /etc/skel/.ssh/authorized_keys
+chmod 0440 /etc/sudoers
+chmod 0700 /var/log/sudo-io
 
 # Enable some system services.  `systemctl list-unit-files` is your friend.
 systemctl enable acpid
