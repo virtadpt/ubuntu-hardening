@@ -1,0 +1,138 @@
+server {
+	listen 80 default_server;
+	listen [::]:80 default_server;
+
+	#listen 443 ssl default_server;
+	#listen [::]:443 ssl default_server;
+
+	root /var/www/html;
+
+	# Add index.php to the list if you are using PHP
+	index index.html index.htm index.nginx-debian.html;
+
+	# Make site accessible from http[s]://localhost/
+	server_name localhost;
+
+	# If you just want to short-circuit things and redirect everything to
+	# the HTTPS site, uncomment this next bit.
+	#return 301 https://$host$request_uri;
+
+	location / {
+		# Uncomment to enable naxsi support on this location.
+		# include /etc/nginx/naxsi.rules
+
+		# First attempt to serve request as file, then
+		# as directory, then fall back to displaying a 404.
+		try_files $uri $uri/ =404;
+
+		# Enable strict transport security for one year.
+		add_header Strict-Transport-Security "max-age=31536000; includeSubdomains";
+
+		# Never allow content from this site to appear in iframes.
+		add_header X-Frame-Options DENY;
+	}
+
+	# Pass PHP scripts to a FastCGI server listening on 127.0.0.1:9000
+	#location ~ \.php$ {
+	#	include snippets/fastcgi-php.conf;
+	#
+	#	# Pick one.
+	#	# With php7.0-cgi alone:
+	#	fastcgi_pass 127.0.0.1:9000;
+	#
+	#	# With php7.0-fpm:
+	#	fastcgi_pass unix:/run/php/php7.0-fpm.sock;
+	#}
+
+	# Only for nginx-naxsi with nginx-naxsi-ui: Process denied requests.
+	#location /RequestDenied {
+	#	proxy_pass http://127.0.0.1:8080;
+	#}
+
+	# Set a custom 404 page if there is one.
+	#error_page 404 /404.html;
+
+	# Set up 50x error pages.
+	error_page 500 502 503 504 /50x.html;
+	location = /50x.html {
+		root /usr/share/nginx/html;
+	}
+
+	# deny access to .htaccess files, if Apache's document root
+	# concurs with nginx's one
+	location ~ /\.ht {
+		deny all;
+	}
+}
+
+server {
+	listen 443 ssl default_server;
+	listen [::]:443 ssl default_server;
+
+	root /var/www/html;
+
+	# Add index.php to the list if you are using PHP
+	index index.html index.htm index.nginx-debian.html;
+
+	# Make site accessible from http[s]://localhost/
+	server_name localhost;
+
+	ssl on;
+	ssl_certificate /etc/ssl/certs/server.crt;
+	ssl_certificate_key /etc/ssl/private/server.key;
+	ssl_session_timeout 10m;
+	ssl_session_cache shared:SSL:10m;
+
+	ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+	ssl_ciphers ECDHE-RSA-AES256-SHA:DHE-RSA-AES256-SHA:DHE-DSS-AES256-SHA:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA;
+	ssl_prefer_server_ciphers on;
+
+	location / {
+		# Uncomment to enable naxsi support on this location.
+		# include /etc/nginx/naxsi.rules
+
+		# First attempt to serve request as file, then
+		# as directory, then fall back to displaying a 404.
+		try_files $uri $uri/ =404;
+
+		# Enable strict transport security for one year.
+		add_header Strict-Transport-Security "max-age=31536000; includeSubdomains";
+
+		# Never allow content from this site to appear in iframes.
+		add_header X-Frame-Options DENY;
+	}
+
+	# Pass PHP scripts to a FastCGI server listening on 127.0.0.1:9000
+	#location ~ \.php$ {
+	#	include snippets/fastcgi-php.conf;
+	#
+	#	# Pick one.
+	#	# With php7.0-cgi alone:
+	#	fastcgi_pass 127.0.0.1:9000;
+	#
+	#	# With php7.0-fpm:
+	#	fastcgi_pass unix:/run/php/php7.0-fpm.sock;
+	#}
+
+	# Only for nginx-naxsi with nginx-naxsi-ui: Process denied requests.
+	#location /RequestDenied {
+	#	proxy_pass http://127.0.0.1:8080;
+	#}
+
+	# Set a custom 404 page if there is one.
+	#error_page 404 /404.html;
+
+	# Set up 50x error pages.
+	error_page 500 502 503 504 /50x.html;
+	location = /50x.html {
+		root /usr/share/nginx/html;
+	}
+
+	# deny access to .htaccess files, if Apache's document root
+	# concurs with nginx's one
+	location ~ /\.ht {
+		deny all;
+	}
+}
+
+
