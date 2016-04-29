@@ -66,6 +66,16 @@ systemctl disable mountnfs-bootclean
 systemctl disable mountnfs
 systemctl disable umountnfs
 
+# Hand^wScript hack the /etc/postfix/main.cf file because it was completely
+# rewritten when the Debian configurator asked you some questions.
+echo "smtpd_tls_ciphers = high" >> /etc/postfix/main.cf
+echo "smtpd_tls_exclude_ciphers = aNULL, MD5, DES, 3DES, DES-CBC3-SHA, RC4-SHA, AES256-SHA, AES128-SHA" >> /etc/postfix/main.cf
+echo "smtp_tls_protocols = !SSLv2, !SSLv3" >> /etc/postfix/main.cf
+echo "smtpd_tls_mandatory_protocols = !SSLv2, !SSLv3" >> /etc/postfix/main.cf
+echo "smtp_tls_note_starttls_offer = yes" >> /etc/postfix/main.cf
+echo "smtpd_tls_received_header = yes" >> /etc/postfix/main.cf
+echo "" >> /etc/postfix/main.cf
+
 # Build the initial AIDE database.
 echo "Building initial AIDE database.  Please be patient, this takes a while."
 aide.wrapper --init
