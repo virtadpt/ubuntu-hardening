@@ -76,6 +76,11 @@ echo "smtp_tls_note_starttls_offer = yes" >> /etc/postfix/main.cf
 echo "smtpd_tls_received_header = yes" >> /etc/postfix/main.cf
 echo "" >> /etc/postfix/main.cf
 
+# Ensure that the Apache mod_headers module is enabled so that, if apache2 is
+# installed and enabled, it won't scream and die.
+ln -s /etc/apache2/mods-available/headers.load \
+    /etc/apache2/mods-enabled/headers.load
+
 # Build the initial AIDE database.
 echo "Building initial AIDE database.  Please be patient, this takes a while."
 aide.wrapper --init
